@@ -15,16 +15,12 @@
 			"version": "0.0.0"
 		},
 		"dataSources": {
-			"questions": {
-				"uri": "model/questions.json",
-				"type": "JSON"
-			},
 			"ZVIP_PROJECT_SRV": {
 				"uri": "/sap/opu/odata/sap/ZVIP_PROJECT_SRV/",
 				"type": "OData",
 				"settings": {
-					"localUri": "localService/ZVIP_PROJECT_SRV/metadata.xml",
-					"odataVersion": "2.0"
+					"odataVersion": "2.0",
+					"localUri": "localService/ZVIP_PROJECT_SRV/metadata.xml"
 				}
 			}
 		}
@@ -45,7 +41,10 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": ["sap_hcb", "sap_bluecrystal"]
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
 	},
 	"sap.ui5": {
 		"_version": "1.1.0",
@@ -56,8 +55,8 @@
 		"dependencies": {
 			"minUI5Version": "1.30.0",
 			"libs": {
-				"sap.m": {},
 				"sap.ui.core": {},
+				"sap.m": {},
 				"sap.ui.layout": {}
 			}
 		},
@@ -74,27 +73,26 @@
 			},
 			"": {
 				"type": "sap.ui.model.json.JSONModel",
-				"dataSource": "questions"
+				"uri": "model/questions.json"
 			},
 			"oDataModel": {
-                "dataSource": "ZVIP_PROJECT_SRV",
-                "settings": {
-                    "defaultBindingMode": "OneTime",
-                    "defaultCountMode": "None",
-                    "defaultOperationMode": "Server",
-                    "headers": {
-                        "Content-Type": "application/json",
-                        "sap-client": "209",
-                        "X-Requested-With": "X"
-                    }
-                },
-                "type": "sap.ui.model.odata.v2.ODataModel"
-            }
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"dataSource": "ZVIP_PROJECT_SRV",
+				"settings": {
+					"headers": {
+						"X-Requested-With": "X",
+						"Content-Type": "application/json",
+						"sap-client": "209"
+					}
+				}
+			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
 		},
 		"routing": {
 			"config": {
@@ -105,15 +103,18 @@
 				"controlAggregation": "pages",
 				"clearTarget": true
 			},
-			"routes": [{
-				"pattern": "",
-				"name": "Main",
-				"target": "main"
-			}, {
-				"pattern": "{group_id}/{question_id}/Detail",
-				"name": "question",
-				"target": "question"
-			}],
+			"routes": [
+				{
+					"pattern": "",
+					"name": "Main",
+					"target": "main"
+				},
+				{
+					"pattern": "{group_id}/{question_id}/Detail",
+					"name": "question",
+					"target": "question"
+				}
+			],
 			"targets": {
 				"main": {
 					"viewName": "Main",
@@ -125,10 +126,6 @@
 				}
 			}
 		}
-	},
-	"sap.platform.hcp": {
-		"uri": "webapp",
-		"_version": "1.1.0"
 	},
 	"sap.platform.abap": {
 		"uri": "/sap/bc/ui5_ui5/sap/zsurvey_manage/webapp",
