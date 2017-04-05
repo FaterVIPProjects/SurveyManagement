@@ -77,31 +77,19 @@
 				"dataSource": "questions"
 			},
 			"oDataModel": {
-<<<<<<< Upstream, based on 578265516ae4f4f11cf74ce9002e98db5b9c4eb2
-				"type": "sap.ui.model.odata.v2.ODataModel",
-=======
->>>>>>> 2b2f19c 05.04.2017 15:49
-				"dataSource": "ZVIP_PROJECT_SRV",
-				"settings": {
-					"defaultBindingMode": "OneTime",
-					"defaultCountMode": "None",
-					"defaultOperationMode": "Server",
-					"headers": {
-						"Content-Type": "application/json",
-<<<<<<< Upstream, based on 578265516ae4f4f11cf74ce9002e98db5b9c4eb2
-						"sap-client": "209"
-					},
-					"defaultOperationMode": "Server",
-					"defaultBindingMode": "TwoWay"
-				}
-=======
-						"sap-client": "209",
-						"X-Requested-With": "X"
-					}
-				},
-				"type": "sap.ui.model.odata.v2.ODataModel"
->>>>>>> 2b2f19c 05.04.2017 15:49
-			}
+                "dataSource": "ZVIP_PROJECT_SRV",
+                "settings": {
+                    "defaultBindingMode": "OneTime",
+                    "defaultCountMode": "None",
+                    "defaultOperationMode": "Server",
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "sap-client": "209",
+                        "X-Requested-With": "X"
+                    }
+                },
+                "type": "sap.ui.model.odata.v2.ODataModel"
+            }
 		},
 		"resources": {
 			"css": [{
