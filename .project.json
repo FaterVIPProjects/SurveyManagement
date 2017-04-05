@@ -45,8 +45,8 @@
     "name": "ZSURVEY_MANAGE"
   },
   "mockpreview": {
-    "mockUri": "/sap/opu/odata/sap/ZVIP_PROJECT_SRV",
-    "metadataFilePath": "",
+    "mockUri": "model/questions.json",
+    "metadataFilePath": "localService/ZVIP_PROJECT_SRV/metadata.xml",
     "loadJSONFiles": false,
     "loadCustomRequests": false,
     "mockRequestsFilePath": ""

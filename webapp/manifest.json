@@ -23,8 +23,8 @@
 				"uri": "/sap/opu/odata/sap/ZVIP_PROJECT_SRV/",
 				"type": "OData",
 				"settings": {
-					"odataVersion": "2.0",
-					"localUri": "localService/ZVIP_PROJECT_SRV/metadata.xml"
+					"localUri": "localService/ZVIP_PROJECT_SRV/metadata.xml",
+					"odataVersion": "2.0"
 				}
 			}
 		}
@@ -56,8 +56,8 @@
 		"dependencies": {
 			"minUI5Version": "1.30.0",
 			"libs": {
-				"sap.ui.core": {},
 				"sap.m": {},
+				"sap.ui.core": {},
 				"sap.ui.layout": {}
 			}
 		},
@@ -77,17 +77,30 @@
 				"dataSource": "questions"
 			},
 			"oDataModel": {
+<<<<<<< Upstream, based on 578265516ae4f4f11cf74ce9002e98db5b9c4eb2
 				"type": "sap.ui.model.odata.v2.ODataModel",
+=======
+>>>>>>> 2b2f19c 05.04.2017 15:49
 				"dataSource": "ZVIP_PROJECT_SRV",
 				"settings": {
+					"defaultBindingMode": "OneTime",
+					"defaultCountMode": "None",
+					"defaultOperationMode": "Server",
 					"headers": {
-						"X-Requested-With": "X",
 						"Content-Type": "application/json",
+<<<<<<< Upstream, based on 578265516ae4f4f11cf74ce9002e98db5b9c4eb2
 						"sap-client": "209"
 					},
 					"defaultOperationMode": "Server",
 					"defaultBindingMode": "TwoWay"
 				}
+=======
+						"sap-client": "209",
+						"X-Requested-With": "X"
+					}
+				},
+				"type": "sap.ui.model.odata.v2.ODataModel"
+>>>>>>> 2b2f19c 05.04.2017 15:49
 			}
 		},
 		"resources": {
@@ -124,6 +137,10 @@
 				}
 			}
 		}
+	},
+	"sap.platform.hcp": {
+		"uri": "webapp",
+		"_version": "1.1.0"
 	},
 	"sap.platform.abap": {
 		"uri": "/sap/bc/ui5_ui5/sap/zsurvey_manage/webapp",
