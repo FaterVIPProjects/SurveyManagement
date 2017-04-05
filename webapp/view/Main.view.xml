@@ -1,0 +1,222 @@
+<mvc:View controllerName="org.fater.app.controller.Main" 
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:u="sap.ui.unified"
+	xmlns:l="sap.ui.layout"
+	xmlns:a="sap.uxap"
+	xmlns="sap.m">
+	<u:SplitContainer id="SplitCont" 
+		showSecondaryContent="true">
+		<u:secondaryContent>
+			<Page title="{i18n>titleQuestionTypePage}">
+				<content>
+					<FlexBox alignContent="Center"
+						justifyContent="Start"
+						alignItems="Center"
+						direction="Column"
+						height="100%">
+						<Button text="{i18n>text}"
+							class="fixedWidthButton"
+							type="Emphasized"
+							id="text"
+							press="onAddQuestionPress"/>
+						<Button text="{i18n>textArea}"
+							type="Emphasized"
+							class="fixedWidthButton"
+							id="textArea"
+							press="onAddQuestionPress"/>
+						<Button text="{i18n>textSingleChoice}"
+							id="textSingleChoice"
+							type="Emphasized"
+							class="fixedWidthButton"
+							press="onAddQuestionPress"/>
+						<Button text="{i18n>textMultiChoice}"
+							id="textMultiChoice"
+							type="Emphasized"
+							class="fixedWidthButton"
+							press="onAddQuestionPress"/>
+						<Button text="{i18n>datePicker}"
+							id="datePicker"
+							type="Emphasized"
+							class="fixedWidthButton"
+							press="onAddQuestionPress"/>
+						<Button text="{i18n>money}"
+							id="money"
+							type="Emphasized"
+							class="fixedWidthButton"
+							press="onAddQuestionPress"/>							
+						<Button text="{i18n>singleCheckbox}"
+							id="singleCheckBox"
+							type="Emphasized"
+							class="fixedWidthButton"
+							press="onAddQuestionPress"/>
+						<Button text="{i18n>fileCertification}"
+							id="fileCertification"
+							type="Emphasized"
+							class="fixedWidthButton"
+							press="onAddQuestionPress"/>
+						<Button text="{i18n>file}"
+							type="Emphasized"
+							id="file"
+							class="fixedWidthButton"
+							press="onAddQuestionPress"/>
+						<Button text="{i18n>yearRevenue}"
+							id="yearRevenue"
+							type="Emphasized"
+							class="fixedWidthButton"
+							press="onAddQuestionPress"/>
+						<Button text="{i18n>yearRevenue3}"
+							id="yearRevenue3"
+							type="Emphasized"
+							class="fixedWidthButton"
+							press="onAddQuestionPress"/>	
+						<Select forceSelection="false"
+							change="onSelectGroup"
+							id="groupSelect">
+							<core:Item key="0" text="{i18n>group1}" />
+							<core:Item key="1" text="{i18n>group4}" />
+							<core:Item key="2" text="{i18n>group3}" />
+							<core:Item key="3" 
+								text="{i18n>group2}" 
+								enabled="{= ${utils>/IsQualityVisible}}"/>
+						</Select>								
+					</FlexBox>
+				</content>
+			</Page> 
+		</u:secondaryContent>
+		<u:content>
+			<Page showHeader="false">
+				<content>
+					<a:ObjectPageLayout id="detailPage"
+						alwaysShowContentHeader="true"
+						sections="{/GroupS}">
+							<a:headerTitle>
+								<a:ObjectPageHeader objectTitle="{i18n>newSurvey}">
+<!--									<a:actions>
+										<a:ObjectPageHeaderActionButton type="Emphasized"
+											hideText="false"
+											visible="{utils>/ScoreManagement}"
+											text="{i18n>scoreManagement}" 
+											press="handleScoreDialog"/>
+										<a:ObjectPageHeaderActionButton type="Emphasized"
+											hideText="false"
+											text="{i18n>saveSurveyOnOtherClusters}" 
+											press="handleSaveSurveyOnOtherClusters"/>
+										<a:ObjectPageHeaderActionButton type="Emphasized"
+											hideText="false"
+											text="{i18n>saveSurvey}" 
+											press="handleSaveSurvey"/>
+									</a:actions>	-->						
+								</a:ObjectPageHeader>
+							</a:headerTitle>
+							<a:headerContent>
+									<Select id="clusterSelect"
+										maxWidth="20%"
+										change="onSelectCluster"
+										forceSelection="false"
+										items="{oDataModel>/ClusterSet}">
+										<core:Item key="{oDataModel>ClusterId}" text="{oDataModel>Name}" />	
+									</Select>	
+									<Select forceSelection="false"
+										maxWidth="20%"
+										visible="false"
+										change="onSelectClusterCom"
+										items="{oDataModel>ClusterCom}"
+										id="surveyClusterComSelect">
+										<core:Item text="{oDataModel>Butxt}" key="{oDataModel>Bukrs}" />
+									</Select>						
+									<Select forceSelection="false"
+										maxWidth="20%"
+										visible="false"
+										change="onSelectPurchOrg"
+										id="purchOrgSelect"
+										items="{oDataModel>ClusterCom}">
+										<core:Item text="{oDataModel>Ekotx}" key="{oDataModel>Ekorg}" />
+									</Select>						
+									<Select forceSelection="false"
+										maxWidth="20%"
+										change="onSelectSurveyType"
+										id="surveyTypeSelect">
+										<core:Item key="PRE_QUALIFICATION" text="{i18n>preQualification}" />
+										<core:Item key="PRE_QUALIFICATION_AND_QUALIFICATION" text="{i18n>bothQualification}" />
+										<core:Item key="ONLY_QUALIFICATION" text="{i18n>onlyQualification}" />
+										<core:Item key="ONLY_CODIFICATION" text="{i18n>onlyCodification}" />
+									</Select>
+							</a:headerContent>
+							<a:sections>
+								<a:ObjectPageSection>
+									<a:subSections>
+										<a:ObjectPageSubSection mode="Expanded"
+											title="{
+												path: 'Title',
+												formatter: '.formatter.groupTitle'
+											}"
+											visible="{= ${Title} !== 'QUALITY' || ${utils>/IsQualityVisible}}">
+											<a:blocks>
+												<l:Grid defaultSpan="L11 M11 S11">
+													<List items="{QuestionS}"
+														showNoData="false">
+														<CustomListItem class="rounded">
+															<content>
+																<VBox height="{Height}"
+																	alignItems="Center"
+																	justifyContent="Center">
+																	<Text text="{Order}" 
+																		width="100%"/>											
+																</VBox>
+															</content>
+														</CustomListItem>
+														<layoutData>
+															<l:GridData span="L1 M1 S1"/>
+														</layoutData>							
+													</List>
+													<List items="{QuestionS}"
+														showNoData="false"
+														mode="Delete"
+														delete="handleDelete">
+														<CustomListItem type="Active"
+															press="onQuestionPress"
+															class="rounded">
+																<FlexBox height="{Height}"
+																	alignItems="Center"
+																	justifyContent="SpaceBetween">
+																	<items>
+																		<Title text="{Text/results/0/Title}"
+																			class="newLine">
+																		</Title>
+																		<Button icon="sap-icon://shortcut"
+																			type="Transparent" 
+																			press="handleJumpLogic">
+																		</Button>
+																	</items>
+																</FlexBox>
+														</CustomListItem>
+													</List>
+												</l:Grid>
+											</a:blocks>
+										</a:ObjectPageSubSection>
+									</a:subSections>
+								</a:ObjectPageSection>											
+						</a:sections>
+					</a:ObjectPageLayout>
+				</content>
+				<footer>
+					<Toolbar>
+						<Button type="Emphasized"
+							visible="{utils>/ScoreManagement}"
+							text="{i18n>scoreManagement}" 
+							press="handleScoreDialog"/>
+						<ToolbarSpacer />
+						<Button type="Emphasized"
+							text="{i18n>saveSurveyOnOtherClusters}" 
+							press="handleSaveSurveyOnOtherClusters"/>						
+						<Button type="Emphasized"
+							text="{i18n>saveSurvey}" 
+							press="handleSaveSurvey"/>
+					</Toolbar>
+				</footer>			
+			</Page>
+		</u:content>
+	</u:SplitContainer>
+</mvc:View>

@@ -1,0 +1,139 @@
+{
+	"_version": "1.1.0",
+	"sap.app": {
+		"_version": "1.1.0",
+		"id": "org.fater.app",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "servicecatalog.connectivityComponent",
+			"version": "0.0.0"
+		},
+		"dataSources": {
+			"questions": {
+				"uri": "model/questions.json",
+				"type": "JSON"
+			},
+			"ZVIP_PROJECT_SRV": {
+				"uri": "/sap/opu/odata/sap/ZVIP_PROJECT_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZVIP_PROJECT_SRV/metadata.xml"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"_version": "1.1.0",
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+	"sap.ui5": {
+		"_version": "1.1.0",
+		"rootView": {
+			"viewName": "org.fater.app.view.App",
+			"type": "XML"
+		},
+		"dependencies": {
+			"minUI5Version": "1.30.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.ui.layout": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "org.fater.app.i18n.i18n"
+				}
+			},
+			"": {
+				"type": "sap.ui.model.json.JSONModel",
+				"dataSource": "questions"
+			},
+			"oDataModel": {
+				"preload": true,
+				"type": "sap.ui.model.odata.ODataModel",
+				"dataSource": "ZVIP_PROJECT_SRV",
+				"settings": {
+					"headers": {
+						"X-Requested-With": "X",
+						"Content-Type": "application/json",
+						"sap-client": "209"
+					}
+				}
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"controlId": "app",
+				"viewPath": "org.fater.app.view",
+				"controlAggregation": "pages",
+				"clearTarget": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "Main",
+					"target": "main"
+				},
+				{
+					"pattern": "{group_id}/{question_id}/Detail",
+					"name": "question",
+					"target": "question"
+				}
+			],
+			"targets": {
+				"main": {
+					"viewName": "Main",
+					"viewLevel": 1
+				},
+				"question": {
+					"viewName": "Question",
+					"viewLevel": 2
+				}
+			}
+		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/zsurvey_manage/webapp",
+		"_version": "1.1.0"
+	}
+}

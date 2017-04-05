@@ -1,0 +1,24 @@
+{
+	"GroupS": [ 
+		{
+			"GroupId": "0000000001",
+		    "Title": "GENERAL",
+			"QuestionS": []
+		},
+		{
+			"GroupId": "0000000002",
+			"Title": "FINANCIAL",
+			"QuestionS": []
+		},
+		{
+			"GroupId": "0000000002",
+			"Title": "ORGANIZATION",
+			"QuestionS": []
+		},
+		{
+			"GroupId": "0000000003",
+			"Title": "QUALITY",
+			"QuestionS": []
+		}
+	]
+}

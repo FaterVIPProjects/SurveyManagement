@@ -1,0 +1,111 @@
+<core:FragmentDefinition xmlns="sap.m" 
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core" 
+	xmlns:f="sap.ui.layout.form">
+	<Dialog type="Message"
+		title="{i18n>scoreManagement}">
+		<content>
+			<List items="{/GroupS}"
+				backgroundDesign="Transparent">
+				<CustomListItem class="answerClass">
+					<f:SimpleForm editable="true"
+						layout="ResponsiveGridLayout"
+						labelSpanL="5"
+						labelSpanM="5"
+						labelSpanS="5">
+						<Title text="{
+							path: 'Title',
+							formatter: '.formatter.groupTitle'
+						}"
+						visible="{= ${Title} !== 'QUALITY' || ${utils>/IsQualityVisible}}"/>
+						<Label text="{i18n>Threshold}"/>
+<!--						<StepInput min="0"
+                            max="100"
+                            step="5"
+							value="{ThresholdPoint}"
+							visible="{= ${Title} !== 'QUALITY' || ${utils>/IsQualityVisible}}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5"/>
+							</layoutData>
+						</StepInput>	-->	
+						<Input type="Number"
+							value="{
+								path : 'ThresholdPoint',
+								type : 'sap.ui.model.type.Integer'
+							}"
+							visible="{= ${Title} !== 'QUALITY' || ${utils>/IsQualityVisible}}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5"/>
+							</layoutData>
+						</Input>							
+						<Label text="{i18n>Target}"/>
+<!--						<StepInput min="0"
+                            max="100"
+                            step="5"
+							value="{TargetPoint}"
+							visible="{= ${Title} !== 'QUALITY' || ${utils>/IsQualityVisible}}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5"/>
+							</layoutData>
+						</StepInput>-->
+						<Input type="Number"
+							value="{
+								path : 'TargetPoint',
+								type : 'sap.ui.model.type.Integer'
+							}"
+							visible="{= ${Title} !== 'QUALITY' || ${utils>/IsQualityVisible}}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5"/>
+							</layoutData>
+						</Input>						
+						<Label text="{i18n>Weight}"/>
+<!--						<StepInput
+							min="0"
+                            step="1"
+							value="{Weight}"
+							visible="{= ${Title} !== 'QUALITY' || ${utils>/IsQualityVisible}}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5"/>
+							</layoutData>
+						</StepInput>-->
+						<Input type="Number"
+							value="{
+								path : 'Weight',
+								type : 'sap.ui.model.type.Integer'
+							}"
+							visible="{= ${Title} !== 'QUALITY' || ${utils>/IsQualityVisible}}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5"/>
+							</layoutData>
+						</Input>						
+						<Label text="{i18n>HsePointThreshold}"/>
+<!--						<StepInput
+							min="0"
+                            step="1"
+							value="{HsneThreshold}"
+							visible="{= ${Title} === 'QUALITY' &amp;&amp; ${utils>/IsQualityVisible} &amp;&amp; ${utils>/isHSE}}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5"/>
+							</layoutData>
+						</StepInput>-->	
+						<Input type="Number"
+							value="{
+								path : 'HsneThreshold',
+								type : 'sap.ui.model.type.Integer'
+							}"							
+							visible="{= ${Title} === 'QUALITY' &amp;&amp; ${utils>/IsQualityVisible} &amp;&amp; ${utils>/isHSE}}">
+							<layoutData>
+								<l:GridData span="L5 M5 S5"/>
+							</layoutData>
+						</Input>						
+					</f:SimpleForm>
+				</CustomListItem>
+			</List> 
+		</content>
+		<endButton>
+			<Button text="{i18n>confirm}"
+				press="closeDialog">
+			</Button>
+		</endButton>		
+    </Dialog>
+</core:FragmentDefinition>

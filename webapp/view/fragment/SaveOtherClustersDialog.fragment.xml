@@ -1,0 +1,137 @@
+<core:FragmentDefinition xmlns="sap.m" 
+	xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core" 
+	xmlns:f="sap.ui.layout.form">
+	<Dialog title="{i18n>cluster}"
+		contentWidth="50%">
+		<content>	
+			<l:Grid>
+				<FlexBox alignItems="Center"
+					justifyContent="Center"
+					height="50px">
+					<Label text="{i18n>chooseClusters}"/>
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>	
+				</FlexBox>
+<!--				<List id="surveysList"
+					backgroundDesign="Transparent"
+					noDataText="{i18n>noSurveys}"
+					items="{utils>/SurveysList}">
+					<CustomListItem class="answerClass  sapUiSmallMarginBottom">
+						<Select selectedKey="{utils>ClusterId}"
+							maxWidth="20%"
+							class="sapUiSmallMarginEnd"
+							items="{oDataModel>/ClusterSet}"
+							forceSelection="false"
+							change="onSelectClusterMassSave">
+							<core:Item key="{oDataModel>ClusterId}" text="{oDataModel>Name}" />
+						</Select>	
+						<Select	class="sapUiSmallMarginEnd"
+							maxWidth="20%"
+							visible="{utils>VisibleBukrs}"
+							change="setValueStateNone"
+							selectedKey="{utils>Bukrs}"
+							items="{oDataModel>ClusterCom}"
+							forceSelection="false">
+							<core:Item key="{oDataModel>Bukrs}" text="{oDataModel>Butxt}" />	
+						</Select>
+						<Select class="sapUiSmallMarginEnd"
+							maxWidth="20%"
+							visible="{utils>VisibleEkorg}"
+							change="setValueStateNone"
+							selectedKey="{utils>Ekorg}"
+							items="{oDataModel>ClusterCom}"
+							forceSelection="false">
+							<core:Item key="{oDataModel>Ekorg}" text="{oDataModel>Ekotx}" />
+						</Select>
+						<Select class="sapUiSmallMarginEnd"
+							maxWidth="20%"
+							change="setValueStateNone"
+							selectedKey="{utils>Type}"
+							forceSelection="false">
+							<core:Item key="PRE_QUALIFICATION" text="{i18n>preQualification}" />
+							<core:Item key="PRE_QUALIFICATION_AND_QUALIFICATION" text="{i18n>bothQualification}" />
+							<core:Item key="ONLY_QUALIFICATION" text="{i18n>onlyQualification}" />
+							<core:Item key="ONLY_CODIFICATION" text="{i18n>onlyCodification}" />							
+						</Select>	
+						<FlexBox height="40px"
+							alignItems="Center"
+							class="rightAligned"							
+							displayInline="true">								
+							<Button icon="sap-icon://delete"
+								type="Reject"
+								press="onDeleteSurveys">
+							</Button>	
+						</FlexBox>
+					</CustomListItem>
+					<layoutData>
+						<l:GridData span="L12 M12 S12"/>
+					</layoutData>
+				</List>-->
+				<Select selectedKey="{utils>/OtherClusterId}"
+					id ="otherClusterId"
+					width="100%"
+					class="sapUiSmallMarginEnd"
+					items="{oDataModel>/ClusterSet}"
+					forceSelection="false"
+					change="onSelectOtherCluster">
+					<core:Item key="{oDataModel>ClusterId}" text="{oDataModel>Name}" />
+					<layoutData>
+						<l:GridData span="L3 M3 S3"/>
+					</layoutData>					
+				</Select>	
+				<Select	class="sapUiSmallMarginEnd"
+					id ="otherBukrs"
+					width="100%"
+					change="setValueStateNoneSelect"
+					selectedKey="{utils>/OtherBukrs}"
+					items="{oDataModel>ClusterCom}"
+					forceSelection="false">
+					<core:Item key="{oDataModel>Bukrs}" text="{oDataModel>Butxt}" />	
+					<layoutData>
+						<l:GridData span="L3 M3 S3"/>
+					</layoutData>								
+				</Select>
+				<Select class="sapUiSmallMarginEnd"
+					id ="otherEkorg"
+					width="100%"
+					change="setValueStateNoneSelect"
+					selectedKey="{utils>/OtherEkorg}"
+					items="{oDataModel>ClusterCom}"
+					forceSelection="false">
+					<core:Item key="{oDataModel>Ekorg}" text="{oDataModel>Ekotx}" />
+					<layoutData>
+						<l:GridData span="L3 M3 S3"/>
+					</layoutData>			
+				</Select>
+				<Select class="sapUiSmallMarginEnd"
+					id ="otherType"
+					width="100%"
+					change="setValueStateNoneSelect"
+					selectedKey="{utils>/OtherType}"
+					forceSelection="false">
+					<core:Item key="PRE_QUALIFICATION" text="{i18n>preQualification}" />
+					<core:Item key="PRE_QUALIFICATION_AND_QUALIFICATION" text="{i18n>bothQualification}" />
+					<core:Item key="ONLY_QUALIFICATION" text="{i18n>onlyQualification}" />
+					<core:Item key="ONLY_CODIFICATION" text="{i18n>onlyCodification}" />
+					<layoutData>
+						<l:GridData span="L3 M3 S3"/>
+					</layoutData>								
+				</Select>	
+			</l:Grid>
+		</content>
+		<buttons>
+<!--			<Button text="{i18n>addSurvey}"
+				type="Accept"
+				press="onAddSurvey">
+			</Button>-->
+			<Button text="{i18n>cancel}"
+				press="closeDialog">
+			</Button>
+			<Button text="{i18n>confirm}"
+				press="onConfirmSaveSurveys">
+			</Button>
+		</buttons>		
+    </Dialog>
+</core:FragmentDefinition>

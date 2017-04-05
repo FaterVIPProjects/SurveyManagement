@@ -1,0 +1,216 @@
+<mvc:View controllerName="org.fater.app.controller.Question" 
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:u="sap.uxap"
+	xmlns:l="sap.ui.layout"
+	xmlns="sap.m">
+	<SplitContainer id="SplitCont">
+		<masterPages>
+			<Page showNavButton="true"
+				id="firstPageMaster"
+				showFooter="true"
+				navButtonPress="onNavBack" 
+				title="{PageTitle}"> 
+				<content>
+					<f:SimpleForm editable="true" 
+						layout="ResponsiveGridLayout"
+						labelSpanL="6"
+						labelSpanM="6"
+						labelSpanS="6">
+						<f:content>
+							<Label text="Question">
+								<layoutData>
+									<l:GridData
+										span="L12 M12 S12"/>
+								</layoutData>
+							</Label>
+							<Select id="languageSelect" 
+								selectedKey="{utils>/Language}"
+								change="onChangeQuestionLanguage"
+								items="{
+									path : 'oDataModel>/LanguageSet',
+								    sorter : {
+							           path : 'Description' 
+							        }
+								}">
+								<core:Item text="{oDataModel>Description}" key="{oDataModel>Key}" />
+							</Select>							
+							<TextArea value="{Title}"
+								id="questionInput" 
+								growing="true"
+								valueLiveUpdate="true"
+								rows="5">
+								<layoutData>
+									<l:GridData
+										span="L12 M12 S12"/>
+								</layoutData>
+							</TextArea>
+							<Label text="Required"/>
+							<SegmentedButton selectedKey="{Mandatory}"
+								id ="requiredButton">
+								<items>
+									<SegmentedButtonItem text="No" key="false" />
+									<SegmentedButtonItem text="Yes" key="true"/>
+								</items>
+							</SegmentedButton>
+							<Label text="{i18n>Description}"/>
+							<SegmentedButton selectedKey="{DescriptionBool}"
+								id ="descriptionButton">
+								<items>
+									<SegmentedButtonItem text="No" key="false" />
+									<SegmentedButtonItem text="Yes" key="true" />
+								</items>
+							</SegmentedButton>
+							<TextArea id="descriptionArea" 
+								value="{Description}" 
+								rows="5"
+								growing="true"
+								visible="{
+										path: 'DescriptionBool',
+										formatter: '.formatter.stringToBoolean'
+								}">
+								<layoutData>
+									<l:GridData
+										span="L12 M12 S12"/>
+								</layoutData>
+							</TextArea>							
+							<Label text="{i18n>charLimit}"/>
+							<SegmentedButton selectedKey="{CharLimit}"
+								visible="{= 
+									${Type} === 'TEXT' || 
+									${Type} === 'TEXT_AREA'
+								}"							
+								id ="charButton">
+								<items>
+									<SegmentedButtonItem text="No" key="false" />
+									<SegmentedButtonItem text="Yes" key="true"/>
+								</items>
+							</SegmentedButton>	
+							<Input id="charInput"
+								value="{CharLimitValue}"
+								visible="{= ${CharLimit} === 'true'}"
+								type="Number">
+								<layoutData>
+									<l:GridData
+										span="L12 M12 S12"/>
+								</layoutData>								
+							</Input>
+						</f:content>
+					</f:SimpleForm>
+				</content>
+				<footer>
+				</footer>
+			</Page>
+		</masterPages>
+		<detailPages>
+			<Page id="questionDetail"
+				enableScrolling="false"
+				showHeader="false">
+				<content>
+					<SegmentedButton id="languagesButtons" 
+						select="onSelectLanguage"
+						items="{Text/results}" 
+						width="100%">
+						<items>
+							<SegmentedButtonItem text="{Langu}" key="{Langu}" />
+							<SegmentedButtonItem text="{Langu}" key="{Langu}"/>
+						</items>
+					</SegmentedButton>
+					<FlexBox alignContent="Center"
+						justifyContent="Center"
+						alignItems="Center"
+						height="100%">
+						<l:Grid vSpacing="0"
+							width="100%"
+							defaultSpan="L12 M12 S12">
+							<FlexBox alignContent="Center"
+								justifyContent="Start"
+								alignItems="Center">
+								<core:Icon src="sap-icon://arrow-right"
+									class="sapUiSmallMarginEnd">
+									<core:layoutData>
+										<l:GridData span="L2 M2 S2"/>
+									</core:layoutData>
+								</core:Icon>					
+								<Title text="{Title}"
+									id="titleQuestion"
+									class="newLine"
+									titleStyle="H1">
+								</Title>								
+							</FlexBox>
+							<Input class="transparent"
+								value="{Description}"
+								liveChange="onDescriptionWriting"
+								placeholder="{i18n>inputPlaceHolder}"
+								visible="{= 
+									${Type} === 'TEXT' || 
+									${Type} === 'TEXT_AREA'
+								}">		
+							</Input>
+							<List id="answerList"
+								items="{AnswerS}"
+								delete="handleDeleteAnswerPress"
+								backgroundDesign="Transparent"
+								visible="{= 
+									${Type} === 'TEXT_SINGLE_CHOICE' || 
+									${Type} === 'TEXT_MULTI_CHOICE' ||
+									${Type} === 'SINGLE_CHECK_BOX'
+								}">
+								<CustomListItem class="answerClass">
+									<Input liveChange="onWritingAnswer"
+										class="sapUiSmallMarginEnd"
+										value="{Title}"
+										width="{= ${utils>/isHSE} &amp;&amp; ${GroupId} === '4' ? '75%' : '100%'}"
+										placeholder="{i18n>answerTooltip}">
+									</Input>	
+<!--									<StepInput min="0"
+										class="sapMInputBaseWidthPadding"
+										visible="{= ${utils>/isHse} &amp;&amp; ${GroupId} === '4'}"
+			                            max="99"
+			                           	width="20%" 
+			                            step="1"
+										value="{HsnePoints}">
+									</StepInput>-->		
+									<Input type="Number"
+										visible="{= ${utils>/isHSE} &amp;&amp; ${GroupId} === '4'}"
+			                           	width="20%" 
+										value="{HsnePoints}">
+									</Input>									
+								</CustomListItem>
+								<layoutData>
+									<l:GridData linebreakL="true"
+										linebreakM="true"
+										linebreakS="true"/>
+								</layoutData>									
+							</List>
+							<Button id="confirmAnswerButton"
+								class="sapUiSmallMarginBegin"
+								text="{i18n>addAnswer}"
+								visible="{= 
+									${Type} === 'TEXT_SINGLE_CHOICE' || 
+									${Type} === 'TEXT_MULTI_CHOICE' ||
+									${Type} === 'SINGLE_CHECK_BOX'
+								}"
+								type="Accept"
+								press="onInsertAnswerPress">
+								<layoutData>
+									<l:GridData indent="L7 M7 S7"
+										span="L4 M4 S4"/>
+								</layoutData>								
+							</Button>
+						</l:Grid>
+					</FlexBox>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button text="{i18n>save}" 
+							type="Emphasized"	
+							press="handleSaveQuestion"/>
+					</Toolbar>
+				</footer>
+			</Page> 
+		</detailPages>
+	</SplitContainer>
+</mvc:View>
