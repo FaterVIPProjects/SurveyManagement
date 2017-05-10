@@ -155,7 +155,8 @@
 											visible="{= ${Title} !== 'QUALITY' || ${utils>/IsQualityVisible}}">
 											<a:blocks>
 												<l:Grid defaultSpan="L11 M11 S11">
-													<List items="{QuestionS}" showNoData="false">
+													<List items="{QuestionS}"
+														showNoData="false">
 														<CustomListItem class="rounded">
 															<content>
 																<VBox height="{Height}"

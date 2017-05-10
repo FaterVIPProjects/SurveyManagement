@@ -15,12 +15,16 @@
 			"version": "0.0.0"
 		},
 		"dataSources": {
+			"questions": {
+				"uri": "model/questions.json",
+				"type": "JSON"
+			},
 			"ZVIP_PROJECT_SRV": {
 				"uri": "/sap/opu/odata/sap/ZVIP_PROJECT_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
-					"localUri": "localService/ZVIP_PROJECT_SRV/metadata.xml"
+					"localUri": "localService/metadata.xml"
 				}
 			}
 		}
@@ -55,8 +59,8 @@
 		"dependencies": {
 			"minUI5Version": "1.30.0",
 			"libs": {
-				"sap.ui.core": {},
 				"sap.m": {},
+				"sap.ui.core": {},
 				"sap.ui.layout": {}
 			}
 		},
@@ -73,10 +77,10 @@
 			},
 			"": {
 				"type": "sap.ui.model.json.JSONModel",
-				"uri": "model/questions.json"
+				"dataSource": "questions"
 			},
 			"oDataModel": {
-				"type": "sap.ui.model.odata.v2.ODataModel",
+				"type": "sap.ui.model.odata.ODataModel",
 				"dataSource": "ZVIP_PROJECT_SRV",
 				"settings": {
 					"headers": {

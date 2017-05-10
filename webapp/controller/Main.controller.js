@@ -1016,7 +1016,7 @@ sap.ui.define([
 			oView.getModel().setProperty("/Bukrs", selectedClusterCom);
 			oView.getModel().setProperty("/Ekorg", selectedClusterPurchOrg);
 			oView.getModel().setProperty("/Status", "A");	
-			
+
 			// Reformat survey for POST and reorder questionId to match visual order
 			var survey = JSON.parse(JSON.stringify(oModel.getProperty("/")));
 			for (var i = 0; survey.GroupS[i]; i++){
@@ -1103,7 +1103,7 @@ sap.ui.define([
 						} 
 					});	  					
 				},
-				function(){
+				function(error){
 					oView.setBusy(false);
 					MessageToast.show(that.getTranslation("gatewayError"));
 				}

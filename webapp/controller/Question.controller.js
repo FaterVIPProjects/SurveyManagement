@@ -39,7 +39,9 @@ sap.ui.define([
 					this.getView().byId("questionInput").bindElement("/GroupS/" + this._groupId + "/QuestionS/" + this._id + "/Text/results/0/");
 					this.getView().byId("titleQuestion").bindElement("/GroupS/" + this._groupId + "/QuestionS/" + this._id + "/Text/results/0/");
 					for (var i = 0; i < oList.getItems().length; i++){
-						oList.getItems()[i].bindElement("/GroupS/" + this._groupId + "/QuestionS/" + this._id + "/AnswerS/" + i +"/Text/results/0/");						
+						oList.getItems()[i].bindElement("/GroupS/" + this._groupId + "/QuestionS/" + this._id + "/AnswerS/" + i +"/Text/results/0/");
+						//oList.getItems()[i].bindElement("/GroupS/" + this._groupId + "/QuestionS/" + this._id + "/AnswerS/" + i +"/Title/");
+						//oList.getItems()[i].bindElement("/GroupS/" + this._groupId + "/QuestionS/" + this._id + "/AnswerS/" + i);
 					}
 					this.getView().byId("languageSelect").setSelectedKey(logonLanguage);
 					this.getView().byId("languagesButtons").setSelectedKey(logonLanguage);
@@ -88,22 +90,72 @@ sap.ui.define([
 			}
 		},
 		
-		onInsertAnswerPress : function(){
-			if (this._answerCount === 0){
-				this._answerCount++;
+		onInsertAnswerPress : function(oEvent){
+			// FIX AS: Eliminazione del conteggio iniziale
+			//if (this._answerCount === 0){
+				//this._answerCount++;
+			//}
+			
+			// FIX AS 10-05-2017: Gestione dell'AnswerID
+			var answerId = (this._answerCount + 1).toString();
+			var results = [];
+			if (this._answerCount >= 1){
+				var question = this.getView().getModel().getProperty("/GroupS/" + this._groupId + "/QuestionS/" + this._id);
+				var oldResults = question.Text.results; 
+				for (var i = 0; oldResults[i]; i++){
+					var result = {
+						Description:"",
+						Langu:oldResults[i].Langu,
+						GroupId:question.GroupId,
+						QuestionId:question.QuestionId,
+						AnswerId:answerId,
+						SurveyId:question.SurveyId,
+						Title:""
+					};
+					results.push(result);
+				}
 			}
 			
 			var newAnswer = {
 					Title: "",
-					AnswerId: this._answerCount,
-					Mandatory: false
+					GroupId:question.GroupId,
+					QuestionId:question.QuestionId,
+					AnswerId: answerId,
+					SurveyId:question.SurveyId,
+					Mandatory: false,
+					Text: {
+						results: results
+					}
 				},
 				oList = this.getView().byId("answerList");
+		
 			this._questionModel.setProperty("/GroupS/" + this._groupId + "/QuestionS/" + this._id + "/AnswerS/" +  this._answerCount + "/", newAnswer);
-			if (this._answerCount > 1){
+			
+			// FIX AS 10-05-2017: Gestione del binding MANUALE del campo Testo, tradotto
+			// In lingua corrente
+			var oView = this.getView();
+			var oUtilsModel = oView.getModel("utils");
+			var currentQuestionLanguage = oUtilsModel.getProperty("/Language");	
+			var sPath = oEvent.getSource().getBindingContext().getPath();	
+			var translations = oView.getModel().getProperty(sPath + "/Text/results");
+			var languageIndex = 0;
+			for (var j = 0; j < translations.length; j++){
+				if (translations[j].Langu === currentQuestionLanguage){
+					languageIndex = j;
+					break;
+				}			
+			}
+
+			oView.byId("answerList").getItems()[this._answerCount].bindElement(sPath + "/AnswerS/" + this._answerCount + "/Text/results/" + languageIndex);
+			
+			this._answerCount++;
+			if (this._answerCount === 1){
+				oList.setMode("None");
+			}
+			else{
 				oList.setMode("Delete");
 			}
-			this._answerCount++;
+			this._questionModel.refresh();
 		},
 		
 		handleDeleteAnswerPress: function(oEvent){
@@ -115,6 +167,9 @@ sap.ui.define([
 			this._answerCount--;
 			if (this._answerCount === 1){
 				oList.setMode("None");
+			}
+			else{
+				oList.setMode("Delete");
 			}			
 			this._questionModel.refresh();
 		},
@@ -131,6 +186,19 @@ sap.ui.define([
 			//Check answers
 			if (question.Type === "TEXT_MULTI_CHOICE" || question.Type === "TEXT_SINGLE_CHOICE" || question.Type === "SINGLE_CHECKBOX"){
 				for (var i = 0; answers[i]; i++){
+					
+					if (answers[i].Text.results.length === 0){
+						var result ={
+							Description:"",
+							GroupId: question.GroupId,
+							Langu: logonLanguage,
+							SurveyId: question.SurveyId,
+							Title: answers[i].Title,
+							AnswerId: answers[i].AnswerId
+						};
+						answers[i].Text.results.push(result);
+					}
+					
 					for (var j = 0; answers[i].Text.results[j]; j++){
 						if (checkTranslation[j] === undefined){
 							checkTranslation[j] = true;							
@@ -150,7 +218,7 @@ sap.ui.define([
 					if (translations[i] && translations[i].Title === ""){
 						translations.splice(i,1);
 					}
-				}				
+				}
 			}
 			if (!check){
 				MessageToast.show(this.getTranslation("fieldError"));
@@ -223,13 +291,14 @@ sap.ui.define([
 					"QuestionId" : (parseInt(this._id, 10) + 1).toString(),
 					"Langu": currentQuestionLanguage,
 					"Description": "",
-					"Title": currentQuestionLanguage + " " + translations[0].Title
+					"Title": currentQuestionLanguage + " " + translations[0].Title,
+					"AnswerId": question.AnswerId
 				};				
 				translations.push(translationItemQuestion);						
 			}
 			
 			//Answer Translation are added only for some question type
-			if (question.Type === "TEXT" || question.Type === "TEXT_AREA"){
+			//if (question.Type === "TEXT" || question.Type === "TEXT_AREA"){
 				for (var j = 0; j < answers.length; j++){
 					var answersTranslations = oView.getModel().getProperty(sPath + "/AnswerS/" + j +"/Text/results");
 					for (var x = 0; x < answersTranslations.length; x++){
@@ -251,7 +320,7 @@ sap.ui.define([
 					oView.getModel().refresh();
 					oView.byId("answerList").getItems()[j].bindElement(sPath + "/AnswerS/" + j + "/Text/results/" + x);
 				}				
-			}
+			//}
 
 			oView.getModel().refresh();
 			oView.byId("questionInput").bindElement(sPath + "/Text/results/" + i);
@@ -265,7 +334,7 @@ sap.ui.define([
 			var sPath = oEvent.getSource().getBindingContext().getPath();
 			var selectedKey = oEvent.getSource().getSelectedKey();
 			var translations = oView.getModel().getProperty(sPath + "/Text/results");
-			var answers = oView.getModel().getProperty(sPath + "/AnswerS");			
+			var answers = oView.getModel().getProperty(sPath + "/AnswerS");	
 			var languageIndex = 0;
 			for (var i = 0; i < translations.length; i++){
 				if (translations[i].Langu === selectedKey){
@@ -273,7 +342,7 @@ sap.ui.define([
 					break;
 				}			
 			}
-			for (var j = 0; j < answers.length; j++){			
+			for (var j = 0; j < answers.length; j++){	
 				oView.byId("answerList").getItems()[j].bindElement(sPath + "/AnswerS/" + j + "/Text/results/" + languageIndex);
 			}
 			oView.byId("questionInput").bindElement(sPath + "/Text/results/" + languageIndex);
