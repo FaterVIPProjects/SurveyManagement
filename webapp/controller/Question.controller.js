@@ -160,9 +160,18 @@ sap.ui.define([
 		
 		handleDeleteAnswerPress: function(oEvent){
 			var oItem = oEvent.getParameter("listItem"),
-				oList = this.getView().byId("answerList"),
-				sIndex = oItem.getBindingContext().getPath().substr(oItem.getBindingContext().getPath().lastIndexOf("/") + 1);
-
+				oList = this.getView().byId("answerList");
+				// FIX AS 10-05-2017: Fix Ricerca Index
+				//sIndex = oItem.getBindingContext().getPath().substr(oItem.getBindingContext().getPath().lastIndexOf("/") + 1);
+				var sIndex = 0;
+				var listItems = oList.getItems();
+				for (var i = 0; i < listItems.length; i++){
+					if (listItems[i] === oItem){
+						sIndex = i;
+						break;
+					}
+				}
+				
 			this._questionModel.getProperty("/GroupS/" + this._groupId + "/QuestionS/" + this._id + "/AnswerS").splice(sIndex, 1);
 			this._answerCount--;
 			if (this._answerCount === 1){
