@@ -85,8 +85,7 @@
 				"settings": {
 					"headers": {
 						"X-Requested-With": "X",
-						"Content-Type": "application/json",
-						"sap-client": "209"
+						"Content-Type": "application/json"
 					}
 				}
 			}
